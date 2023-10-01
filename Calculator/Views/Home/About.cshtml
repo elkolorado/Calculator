@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<h1>@ViewBag.WelcomeMessage, @ViewBag.Name!</h1>
+
+@foreach (Dane person in Model){
+    <p>@person.Name @person.Surname</p>
+}
