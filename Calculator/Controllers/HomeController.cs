@@ -23,24 +23,36 @@ namespace Calculator.Controllers
             return View();
         }
 
-        public IActionResult Calculators(Calculators calculator){
-            
-            if(calculator.Equation == "sum"){
-                calculator.Accumulate += calculator.Reduce;  
-            }
-            if(calculator.Equation == "sub"){
-                calculator.Accumulate -= calculator.Reduce;
-            }
-
-            if(calculator.Equation == "multiply"){
-                calculator.Accumulate *= calculator.Reduce;
+        public IActionResult Calc(Calc calculator)
+        {
+            switch (calculator.Operation)
+            {
+                case Operation.Addition:
+                    calculator.Accumulate += calculator.Reduce;
+                    break;
+                case Operation.Subtraction:
+                    calculator.Accumulate -= calculator.Reduce;
+                    break;
+                case Operation.Multiplication:
+                    calculator.Accumulate *= calculator.Reduce;
+                    break;
+                case Operation.Division:
+                    if (calculator.Reduce != 0)
+                    {
+                        calculator.Accumulate /= calculator.Reduce;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             ViewBag.Result = calculator.Accumulate;
             return View();
         }
 
-        public IActionResult Birthday(Birthday birthday){
+
+        public IActionResult Birthday(Birthday birthday)
+        {
             ViewBag.WelcomeMessage = $"Witaj {birthday.Name}, masz {DateTime.Now.Year - birthday.Year} lat";
             return View();
         }
@@ -49,7 +61,7 @@ namespace Calculator.Controllers
             ViewBag.Name = "Anna";
             ViewBag.CurrentHour = DateTime.Now.Hour;
             ViewBag.WelcomeMessage = ViewBag.CurrentHour < 17 ? "Dzień dobry" : "Dobry wieczór";
-            
+
             Dane[] people =
             {
                 new Dane {Name = "Anna", Surname="Kowalska"},
@@ -57,7 +69,7 @@ namespace Calculator.Controllers
                 new Dane {Name = "Mateusz", Surname="Kowalski"}
 
             };
-            
+
             return View(people);
         }
 
